@@ -105,6 +105,12 @@ export const Projects = () =>{
             link: 'https://bookbins.in/wp-content/uploads/2021/05/The-Psychology-Of-Money-Morgan-Housel-Buy-Online-Bookbins-1.png'
         },
         {
+            title: "THE KREMLIN SCHOOL OF NEGOTIATION",
+            description: "Books by: Igor Ryzov",
+            imgUrl: 'https://cdn.gramedia.com/uploads/picture_meta/2023/4/9/rdsdebjng4maexpynmja6c.jpg',
+            link: 'https://www.gramedia.com/products/the-kremlin-school-of-negotiation'
+        }, 
+        {
             title: "LEADERSHIP",
             description: "Vice Leader Tribe of The Complete Intern Batch 2 CIMB Niaga",
             imgUrl: 'https://kevinvalerian21.github.io/static/MyCertifs/Certificate Vice Leader-CIMB Niaga.jpg',

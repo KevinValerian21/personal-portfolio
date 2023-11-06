@@ -14,14 +14,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
 import Home from './Pages/Home';
-import TestPages from './Pages/TestPages';
+// import Skills from './Pages/Skills';
+import Dokumentasi from './Pages/Dokumentasi';
 
 function App() {
   return (
     <Router>
       <Routes>
           <Route path='/' element={<Home/>} />
-          <Route path='/TestPages' element={<TestPages/>} />
+          {/* <Route path='/Skills' element={<Skills/>} /> */}
+          <Route path='/Dokumentasi' element={<Dokumentasi/>} />
       </Routes>
     </Router>
   );
