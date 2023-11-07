@@ -13,17 +13,19 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
-import Home from './Pages/Home';
-// import Skills from './Pages/Skills';
-import Dokumentasi from './Pages/Dokumentasi';
+import Pages1_Home from './components/Pages1_Home';
+import Pages2_Portfolio from './components/Pages2_Portfolio';
+import Pages3_Dokumentasi from './components/Pages3_Dokumentasi';
+import Pages4_Praktek from './components/Pages4_Praktek';
 
 function App() {
   return (
     <Router>
       <Routes>
-          <Route path='/' element={<Home/>} />
-          {/* <Route path='/Skills' element={<Skills/>} /> */}
-          <Route path='/Dokumentasi' element={<Dokumentasi/>} />
+          <Route path='/' element={<Pages1_Home/>} />
+          <Route path='/Pages2_Portfolio' element={<Pages2_Portfolio/>} />
+          <Route path='/Pages3_Dokumentasi' element={<Pages3_Dokumentasi/>} />
+          <Route path='/Pages4_Praktek' element={<Pages4_Praktek/>} />
       </Routes>
     </Router>
   );

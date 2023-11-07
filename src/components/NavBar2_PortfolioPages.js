@@ -7,8 +7,10 @@ import navIcon1 from '../assets/img/nav-icon1.svg';
 import navIcon2 from '../assets/img/Frame.svg';
 import navIcon3 from '../assets/img/nav-icon3.svg';
 import { useNavigate } from 'react-router-dom';
+import download from 'downloadjs';
 
-export const NavBar = () => {
+
+export const NavBar2_PortfolioPages = () => {
   const [activeLink, setActiveLink] = useState('home');
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
@@ -29,8 +31,17 @@ export const NavBar = () => {
 
   const onUpdateActiveLink = (value) => {
     setActiveLink(value);
-    navigate(value === 'Dokumentasi' ? '../Dokumentasi' : ``);
+    navigate(value === '/Pages1_Home' ? '/Pages1_Home' : ``);
   };
+
+  const handleDownloadResume = () => {
+    // Replace 'resume.pdf' with the actual path to your PDF file.
+    const pdfFilePath = '../assets/resume/CV_Kevin.pdf';
+  
+    // Use the downloadjs library to initiate the download.
+    download(pdfFilePath, 'CV_Kevin.pdf', 'application/pdf');
+  };
+  
 
   return (
     <Navbar expand="lg" className={scrolled ? 'scrolled' : ''}>
@@ -40,34 +51,34 @@ export const NavBar = () => {
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
+          <Nav.Link
+            className={activeLink === 'Pages1_Home' ? 'active navbar-link' : 'navbar-link'}
+            onClick={() => navigate('/')}
+          >
+            Home
+          </Nav.Link>
+          <Nav.Link
+            className={activeLink === 'Pages2_Portfolio' ? 'active navbar-link' : 'navbar-link'}
+            onClick={() => navigate('/Pages2_Portfolio')}
+          >
+            Portfolio
+          </Nav.Link>
+
             <Nav.Link
-              href="#home"
-              className={activeLink === 'home' ? 'active navbar-link' : 'navbar-link'}
-              onClick={() => onUpdateActiveLink('/home')}
+              className={
+                activeLink === 'Pages3_Dokumentasi' ? 'active navbar-link' : 'navbar-link'
+              }
+              onClick={() => navigate('/Pages3_Dokumentasi')}
             >
-              Home
-            </Nav.Link>
-            <Nav.Link
-              href="#skills"
-              className={activeLink === 'skills' ? 'active navbar-link' : 'navbar-link'}
-              onClick={() => onUpdateActiveLink('/skills')}
-            >
-              Skills
-            </Nav.Link>
-            <Nav.Link
-              href="#projects"
-              className={activeLink === 'projects' ? 'active navbar-link' : 'navbar-link'}
-              onClick={() => onUpdateActiveLink('/projects')}
-            >
-              Portfolio
+              Dokumentasi
             </Nav.Link>
             <Nav.Link
               className={
-                activeLink === 'Dokumentasi' ? 'active navbar-link' : 'navbar-link'
+                activeLink === 'Pages4_Fetching' ? 'active navbar-link' : 'navbar-link'
               }
-              onClick={() => onUpdateActiveLink('Dokumentasi')}
+              onClick={() => navigate('/Pages4_Praktek')}
             >
-              Dokumentasi
+              Praktek
             </Nav.Link>
           </Nav>
           <span className="navbar-text">
@@ -82,8 +93,8 @@ export const NavBar = () => {
                 <img src={navIcon3} alt="" />
               </a>
             </div>
-            <button className="vvd" onClick={() => console.log('connect')}>
-              <span>Let's Connect</span>
+            <button className="vvd" onClick={() => handleDownloadResume()}>
+              <span>Download Resume</span>
             </button>
           </span>
         </Navbar.Collapse>
