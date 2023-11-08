@@ -66,6 +66,17 @@ export const Banners = () => {
                 </Col>
                 <Col id="videos">
                     <Row>
+                      <Col xs={12} md={12} lg={12}>
+                        <iframe
+                          width="100%"
+                          height="315"
+                          src="https://www.youtube.com/embed/NytDzaZEo60?start=8&end=52"
+                          allowFullScreen
+                          title="YouTube Video"
+                        ></iframe>
+                      </Col>
+                    </Row>
+                    <Row>
                         {videoList.map((media, index) => (
                         <Col key={index} xs={12} md={12} lg={12}>
                         <div
@@ -80,7 +91,6 @@ export const Banners = () => {
                         </Col>
                         ))}
                     </Row>
-                    
                 </Col>
             </Row>
         </Col>
