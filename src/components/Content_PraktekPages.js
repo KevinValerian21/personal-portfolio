@@ -149,7 +149,7 @@ function ModalsPart2(props) {
       </Modal.Header>
       <Modal.Body>
         <h3 style={{ color: 'black', textAlign: 'center' }}>
-          DETAIL INFORMASI DENGAN FETCHING 2 
+          DETAIL INFORMASI DENGAN SEARCH BY ID
         </h3>
         <br></br>
         <Table
@@ -168,36 +168,71 @@ function ModalsPart2(props) {
           <tbody>
             {props.selectedDetailsbyID ? (
               Object.entries(props.selectedDetailsbyID).map(([key, value]) => {
-                if (key === 'id' && (value <= 0 || value > props.selectedDetailsbyID.length)) {
-                  // ID is outside the specified range, display a message
-                  return (
-                    <tr key={key}>
-                      <td colSpan="2">ID {value} is not available.</td>
-                    </tr>
-                  );
-                } else {
-                  // Render other fields
-                  return (
-                    <tr key={key}>
-                      <td>{key}</td>
-                      <td>
-                        {key === 'address'
-                          ? getAddressAsString(value)
-                          : key === 'company'
-                          ? getCompanyAsString(value)
-                          : typeof value === 'object'
-                          ? JSON.stringify(value)
-                          : value}
-                      </td>
-                    </tr>
-                  );
-                }
+                return (
+                  <tr key={key}>
+                    <td>{key}</td>
+                    <td>
+                      {key === 'address'
+                        ? getAddressAsString(value)
+                        : key === 'company'
+                        ? getCompanyAsString(value)
+                        : typeof value === 'object'
+                        ? JSON.stringify(value)
+                        : value}
+                    </td>
+                  </tr>
+                );
               })
             ) : (
               <tr>
                 <td colSpan="2">No user details available.</td>
               </tr>
             )}
+          </tbody>
+
+        </Table>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
+
+function ModalsPart3(props) {
+  const { searchUserId } = props;
+
+  // // Check if searchUserId is less than or equal to 0 or greater than the length of users
+  // const isInvalidSearch = searchUserId <= 0 || searchUserId > users.length;
+
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter" style={{ color: 'black', textAlign: 'center' }}>
+          User Details
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <h3 style={{ color: 'black', textAlign: 'center' }}>
+          DETAIL INFORMASI DENGAN SEARCH BY ID
+        </h3>
+        <br></br>
+        <Table
+          striped
+          bordered
+          hover
+          variant="dark"
+          style={{ background: 'lightgray' }}
+        >
+          <tbody>
+                <tr>
+                  <td colSpan="2" style={{ textAlign: 'center' }}>ID {searchUserId} is not available.</td>
+                </tr>
           </tbody>
 
         </Table>
@@ -216,6 +251,7 @@ export const Content_PraktekPages = () => {
   const [error, setError] = useState(null);
   const [modalShow, setModalShow] = React.useState(false);
   const [modalShow2, setModalShow2] = React.useState(false);
+  const [modalShow3, setModalShow3] = React.useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [selectedUserDetails, setSelectedUserDetails] = useState(null);
   const [selectedUD_2,   setSelectedUD_2  ] = useState(null);
@@ -256,14 +292,14 @@ export const Content_PraktekPages = () => {
   
   
   const handleSearchById = () => {
-    // Check if searchUserId is less than 0 or greater than the length of users
-    if (searchUserId > 0 || searchUserId <= users.length) {
-      // Show a modal with a specific message
-      setSelectedUserDetails(null); // Clear any existing user details
-      setModalShow(true);
-      setShowAlert(true);
-      return;
-    }
+  // Check if searchUserId is less than or equal to 0 or greater than the length of users
+  if (searchUserId <= 0 || searchUserId > users.length) {
+    // Show a modal with a specific message
+    setSelectedUserDetails(null); // Clear any existing user details
+    setModalShow3(true);
+    setShowAlert(true);
+    return;
+  }
 
     // Fetch user details when the button is clicked
     fetch(`https://jsonplaceholder.typicode.com/users/${searchUserId}`)
@@ -453,37 +489,38 @@ export const Content_PraktekPages = () => {
             </Button>
             <Button variant="primary"  onClick={() => {
 
-                              // Fetch user details when the button is clicked
-                              fetch(
-                                `https://jsonplaceholder.typicode.com/users/${searchUserId}`
-                              )
-                                .then((response) => {
-                                  if (response.ok) {
-                                    return response.json(); // Parse the JSON response
-                                  } else {
-                                    throw new Error(
-                                      'Network response was not ok'
-                                    );
-                                  }
-                                })
-                                .then((data) => {
-                                  setSelectedUD_2(data);
-                                  setModalShow2(true);
-                                })
-                                .catch((error) =>
-                                  console.error(
-                                    'Error fetching user details:',
-                                    error
-                                  )
-                                );
-                            }}>
+            // Fetch user details when the button is clicked
+            fetch(
+              `https://jsonplaceholder.typicode.com/users/${searchUserId}`
+            )
+              .then((response) => {
+                if (response.ok) {
+                  return response.json(); // Parse the JSON response
+                } else {
+                  setModalShow3(true);
+                  throw new Error(
+                    'Network response was not ok'
+                  );
+                }
+              })
+              .then((data) => {
+                setSelectedUD_2(data);
+                setModalShow2(true);
+              })
+              .catch((error) =>
+                console.error(
+                  'Error fetching user details:',
+                  error
+                )
+              );
+            }}>                  
               Search
             </Button>
           </Modal.Footer>
           {/* Conditionally render ModalsPart2 */}
           {selectedUD_2 && (
             <ModalsPart2
-              // users={users}
+              users={users}
               // userId={selectedUserId}
               selectedDetailsbyID={selectedUD_2}
               show={modalShow2}
@@ -494,6 +531,14 @@ export const Content_PraktekPages = () => {
             />
           )}
         </Modal>
+        <ModalsPart3
+              searchUserId={searchUserId}
+              show={modalShow3}
+              onHide={() => {
+                setModalShow3(false);
+                setShowSearchInput(false); // Menyembunyikan input setelah menutup modal
+              }}
+            />
       </Container>
     </section>
   );
