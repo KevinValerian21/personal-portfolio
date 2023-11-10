@@ -258,7 +258,7 @@ export const Content_PraktekPages = () => {
 
   const [showAlert, setShowAlert] = useState(false);
   const [showAllData, setShowAllData] = useState(false);
-  const [searchUserId, setSearchUserId] = useState(''); // State untuk menyimpan ID pencarian
+  const [searchUserId, setSearchUserId] = useState(0); // State untuk menyimpan ID pencarian
   const [showSearchInput, setShowSearchInput] = useState(false); // State untuk menampilkan/hide input pencarian
   const [showSearchModal, setShowSearchModal] = useState(false); // State untuk menampilkan/hide modal pencarian
 
@@ -475,10 +475,11 @@ export const Content_PraktekPages = () => {
             <Modal.Title style={{ color: 'black', textAlign: 'center' }}>Search By ID</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {/* <label>Enter User ID:</label> */}
+            <label style={{ color: 'black'}}>Enter User ID:</label>
             <input
               type="number"
               placeholder="Enter User ID"
+              style={{ textAlign: 'center' }}
               value={searchUserId}
               onChange={(e) => setSearchUserId(e.target.value)}
             />
